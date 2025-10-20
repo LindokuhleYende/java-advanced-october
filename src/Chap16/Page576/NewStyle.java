@@ -9,7 +9,7 @@ public class NewStyle {
     public static void main(String[] args) {
         NewStyle builder = new NewStyle();
         builder.cardList.add(new QuizCard("What is Java?", "A programming language"));
-        builder.saveFile(new File("src\\Chap16\\Page576\\new_quizcards.txt"));
+        builder.saveFile(new File("src\\Chap16\\Page576\\new_quizcards2.txt"));
     }
 
     private void saveFile(File file) {
