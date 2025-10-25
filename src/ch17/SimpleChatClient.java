@@ -56,8 +56,8 @@ public class SimpleChatClient {
       InetSocketAddress serverAddress = new InetSocketAddress("127.0.0.1", 5000);
       SocketChannel socketChannel = SocketChannel.open(serverAddress);
 
-      reader = new BufferedReader(Channels.newReader(socketChannel, UTF_8));
-      writer = new PrintWriter(Channels.newWriter(socketChannel, UTF_8));
+      reader = new BufferedReader(Channels.newReader(socketChannel, UTF_8)); //reader reads messages from the server.
+      writer = new PrintWriter(Channels.newWriter(socketChannel, UTF_8)); //writer sends messages from the server.
 
       System.out.println("Networking established. Client running at: " + socketChannel.getLocalAddress());
     } catch (IOException ex) {
@@ -66,9 +66,9 @@ public class SimpleChatClient {
   }
 
   private void sendMessage() {
-    writer.println(outgoing.getText());
+    writer.println(outgoing.getText()); // It sends the message text to the server.
     writer.flush();
-    outgoing.setText("");
+    outgoing.setText(""); // Clears the text field.
     outgoing.requestFocus();
   }
 

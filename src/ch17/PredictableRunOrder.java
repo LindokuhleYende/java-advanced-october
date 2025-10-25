@@ -57,9 +57,11 @@ class PredictableLatch {
     CountDownLatch latch = new CountDownLatch(1);
     executor.execute(() -> waitForLatchThenPrint(latch));
     System.out.println("back in main");
-    latch.countDown();
-    executor.shutdown();
-    executor.awaitTermination(2, TimeUnit.SECONDS);
+    latch.countDown(); // a decrement making latch = 0
+    System.out.println("Testing...");
+
+      executor.shutdown();
+      executor.awaitTermination(2, TimeUnit.SECONDS);
   }
 
   private static void waitForLatchThenPrint(CountDownLatch latch) {

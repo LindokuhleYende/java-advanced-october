@@ -16,16 +16,17 @@ public class SimpleChatServer {
   }
 
   public void go() {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
+    ExecutorService threadPool = Executors.newCachedThreadPool(); //Creates a thread pool that can dynamically create new threads.
     try {
       ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-      serverSocketChannel.bind(new InetSocketAddress(5000));
+      serverSocketChannel.bind(new InetSocketAddress(5000));  //Opens a server socket channel to listen for connections on port 5000.
 
       while (serverSocketChannel.isOpen()) {
         SocketChannel clientSocket = serverSocketChannel.accept();
-        PrintWriter writer = new PrintWriter(Channels.newWriter(clientSocket, UTF_8));
-        clientWriters.add(writer);
-        threadPool.submit(new ClientHandler(clientSocket));
+        PrintWriter writer = new PrintWriter(Channels.newWriter(clientSocket, UTF_8)); //It creates a PrintWriter to send data to that client.
+        clientWriters.add(writer); //Adds the writer to a list clientWriters (so it can broadcast messages later).
+        threadPool.submit(new ClientHandler(clientSocket)); //Creates a new ClientHandler and submits it to the thread pool.
+          //Each new client gets its own thread via the thread pool, and that thread runs ClientHandler.run()
         System.out.println("got a connection");
       }
     } catch (IOException ex) {
