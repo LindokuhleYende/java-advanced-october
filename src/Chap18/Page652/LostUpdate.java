@@ -3,6 +3,7 @@ package Chap18.Page652;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // This class demonstrates the "Lost Update" concurrency problem
 public class LostUpdate {
@@ -31,11 +32,18 @@ public class LostUpdate {
 }
 
 // This class holds the shared balance value
-class Balance {
-    int balance = 0;  // Starting value is 0
+//class Balance {
+//    int balance = 0;  // Starting value is 0
+//
+//    // This method is called by multiple threads to increase the balance by 1
+//    public synchronized void increment() {
+//        balance++;
+//    }
+//}
 
-    // This method is called by multiple threads to increase the balance by 1
-    public synchronized void increment() {
-        balance++;
+class Balance {
+    AtomicInteger balance = new AtomicInteger(0);
+    public void increment() {
+        balance.incrementAndGet();
     }
 }
